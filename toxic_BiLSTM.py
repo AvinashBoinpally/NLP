@@ -39,7 +39,7 @@ print(f'Max words in text {max(len(s) for s in sequences)}')
 print(f'Min words in text {min(len(s) for s in sequences)}')
 
 word2idx = tokenizer.word_index
-data = pad_sequences(sequences, maxlen=SEQ_LENGTH)
+data = pad_sequences(sequences, maxlen=SEQ_LENGTH, padding='post')
 num_words = min(MAX_VOC, len(word2idx) + 1)
 
 embedded_mtx = np.zeros((num_words, EMBEDDING_DIM))
