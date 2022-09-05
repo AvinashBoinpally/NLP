@@ -142,7 +142,6 @@ def sample_line():
 for _ in range(4):
   sample_line() 
 
-
 # plot some data
 plt.plot(res.history['loss'], label='loss')
 plt.plot(res.history['val_loss'], label='val_loss')
