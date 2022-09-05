@@ -87,6 +87,7 @@ mod_res = model.fit(
 )
 
 # plot some data
+
 plt.plot(mod_res.history['loss'], label='loss')
 plt.plot(mod_res.history['val_loss'], label='val_loss')
 plt.legend()
