@@ -11,7 +11,6 @@ from keras.preprocessing.sequence import pad_sequences
 from keras.models import Model
 from sklearn.metrics import roc_auc_score
 
-from .toxic_cnn import BATCH_SIZE, EMBEDDING_DIM, EPOCHS, MAX_VOC, VALIDATION_SPLIT
 
 EMBEDDING_DIM = 100
 MAX_VOC = 20000
