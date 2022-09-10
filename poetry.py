@@ -17,7 +17,7 @@ EMBEDDING_DIM = 100
 MAX_VOCAB_SIZE = 3000
 LATENT_DIM = 25
 BATCH_SIZE = 128
-EPOCHS = 20
+EPOCHS = 2000
 
 input_text = []
 target_text = []
