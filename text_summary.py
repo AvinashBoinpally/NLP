@@ -7,6 +7,8 @@ from keras_preprocessing.sequence import pad_sequences
 from keras.models import Model
 from keras.utils.vis_utils import plot_model
 import pickle
+from keras.callbacks import EarlyStopping
+from keras import models
 
 import os
 
@@ -125,6 +127,10 @@ st = 0
 en = 1
 
 
+early_stop = EarlyStopping(monitor='val_loss', mode='min', verbose=1, patience=2)
+
+
+
 for i in range(partitions):
   print(f"partition {i}/ {partitions}")
   nu = int(articles_padded.shape[0] / partitions)
@@ -136,11 +142,23 @@ for i in range(partitions):
 
   model.fit([articles_tr, summary_padded_tr[:, :-1]], 
   summary_padded_tr.reshape(summary_padded_tr.shape[0], summary_padded_tr.shape[1],1)[:,1:],
-  epochs=EPOCHS,  batch_size=12, validation_split=0.2)
+  epochs=EPOCHS,  batch_size=12, validation_split=0.2,
+  call_backs =[early_stop])
 
 
 model.save(os.path.join('./models/text_summary.h5'), save_format="h5")
 
+reconstructed_model = models.load_model("./models/text_summary.h5")
+
+
+
+enc_model = Model(inputs=ec_input, outputs=[en_h, en_c])
+dec_in_h = Input(shape=(LATENT_DIM*2,))
+dec_in_c = Input(shape=(LATENT_DIM*2,))
+dec_out, de_h, de_c = de_lstm(embedded_lyr_2, initial_state=[dec_in_h, dec_in_c] )
+
+dec_final = de_dense(dec_out)
+dec_model = Model([dec_in_h, dec_in_c], [dec_final] + [de_h, de_c])
 
 
 
